@@ -149,6 +149,19 @@ instantly with a parse error.
 `bacon` is not a valid ninja target on Evolution X source — use
 `target-files-package` instead.
 
+## 8b. Cleanup automation (added after the fact)
+
+Originally, ArrowOS extraction (arrr.zip → boot.img → boot_out/) and the
+Nothing Launcher .apkm extraction (launcher.apkm → launcher_extracted/)
+left ~1.3GB+ of dead-weight files sitting in ~/Downloads indefinitely —
+they were only ever needed transiently to pull out the kernel/dtb and
+the base.apk respectively. Both scripts now delete these leftovers
+automatically immediately after the needed files are safely copied into
+the device tree, so no manual cleanup step is required for these two
+sources specifically. (The unrelated, larger ccache/.intermediates
+cleanup during an actual storage-full crisis is still manual — see the
+STORAGE RECOVERY section in build.sh.)
+
 ## 9. Safety net
 Stock firmware for restore-to-factory if anything goes permanently
 wrong: https://firmwarefile.com/oppo-realme-pad-rmp2102 — flash the

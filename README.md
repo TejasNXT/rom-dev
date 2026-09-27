@@ -45,4 +45,3 @@ is missing (the kernel/launcher steps just print a warning and skip).
 - `build_and_compile.sh` — same 17 fixes, then automatically starts the build
 - `BUILD_LOG.md` — narrative log: every error hit, why it happened, what fixed it
 - `device-tree-patches/` — the actual diffs/created files applied to the device tree (colors.xml, dimens.xml, BoardConfig.mk additions, etc.), in case you want to apply them by hand instead of running either script
-# rom-dev

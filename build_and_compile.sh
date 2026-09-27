@@ -209,6 +209,12 @@ if [ -f ~/Downloads/launcher.apkm ]; then
   unzip -o ~/Downloads/launcher.apkm base.apk -d ~/Downloads/launcher_extracted
   cp ~/Downloads/launcher_extracted/base.apk vendor/extra/NothingLauncher/NothingLauncher.apk
   echo "Nothing Launcher extracted from .apkm and copied!"
+
+  # The .apkm bundle and its unzipped contents are only needed to pull
+  # out base.apk. Now that it's safely copied into the device tree as
+  # NothingLauncher.apk, clean up the small leftovers automatically.
+  rm -f ~/Downloads/launcher.apkm
+  rm -rf ~/Downloads/launcher_extracted
 elif [ -f ~/Downloads/launcher.apk ]; then
   cp ~/Downloads/launcher.apk vendor/extra/NothingLauncher/NothingLauncher.apk
   echo "Nothing Launcher .apk copied!"
@@ -451,6 +457,18 @@ TARGET_PREBUILT_KERNEL := device/realme/RMP6768/prebuilt/kernel
 BOARD_PREBUILT_DTBIMAGE_DIR := device/realme/RMP6768/prebuilt
 EOF
   echo "Prebuilt kernel setup done!"
+
+  # ArrowOS itself is NOT part of the ROM being built — it was only ever
+  # a source to extract a working kernel binary from (same hardware,
+  # different ROM name). Now that kernel+dtb are safely copied into
+  # device/realme/RMP6768/prebuilt/, the original zip/boot.img/extracted
+  # files are pure dead weight (~1.3GB+) and are cleaned up automatically
+  # so they don't eat into the storage budget for the rest of the build.
+  echo "Cleaning up ArrowOS extraction leftovers (no longer needed)..."
+  rm -f ~/Downloads/arrr.zip
+  rm -f ~/Downloads/boot.img
+  rm -rf ~/Downloads/boot_out
+  echo "Cleanup done — only the extracted kernel/dtb inside the device tree remain."
 else
   echo "WARNING: ~/Downloads/arrr.zip not found!"
   echo "Download ArrowOS ROM from:"
