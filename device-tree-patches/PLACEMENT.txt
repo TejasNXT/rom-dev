@@ -1,0 +1,1 @@
+PATH: device/realme/RMP6768/overlay/frameworks/base/core/res/res/values/
